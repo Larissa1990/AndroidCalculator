@@ -2,11 +2,20 @@ package com.larissa.android.calculator;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-//用于实现计算功能的类。想学习中缀表达式转后缀表达式的同学可以看下这段代码。
-//不感兴趣的同学可以直接调用静态方法Calculator.calculate(String expression)
-//另外，转换成前缀表达式也可以，前缀表达式就是有位李同学提到的波兰表达式。想刷算法的同学可以在leetcode上搜索相关题目。
 
 public class Calculator {
+    public static Double factorial(Double n){
+        int num=n.intValue();
+        int ans=1;
+        while(num!=1){
+            ans*=num;
+            num-=1;
+        }
+        return Double.valueOf(ans);
+    }
+
+
+
     public static String calculate(String expression){
         String _expression=expression.replace('X','*');
         List<String>tokens=postfixExpression(_expression);

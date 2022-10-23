@@ -1,0 +1,148 @@
+options{
+    STATIC=false;   // 关闭生成静态java方法，默认是true
+}
+PARSER_BEGIN(CalculatorParser)
+package com.larissa.android.calculator;
+
+public class CalculatorParser {
+    public CalculatorParser(String expr){
+        this(new StringReader(expr));
+        }
+
+}
+PARSER_END(CalculatorParser)
+
+SKIP:{
+    " "
+}
+
+TOKEN:{
+    <EQUALS: "=">
+    | <MULTIPLY: "*">
+    | <DIVIDE: "/">
+    | <ADD: "+">
+    | <SUBTRACT: "-">
+    | <POWER: "^">
+    | <LPAREN: "(">
+    | <RPAREN: ")">
+}
+
+TOKEN : {
+    <NUMBER:<DIGITS>
+    | <DIGITS>"."<DIGITS>
+    | <DIGITS>"."
+    | "."<DIGITS>>
+    |
+    <#DIGITS:(["0"-"9"])+>
+}
+
+TOKEN : {
+    <SIN:"sin">
+    | <COS:"cos">
+    | <TAN: "tan">
+    | <SQRT: "sqrt">
+    | <FACTORIAL: "!">
+    | <LOG: "log">
+    | <LN: "ln">
+}
+
+TOKEN : {
+    <PI: "pi">
+    | <E: "e">
+}
+
+//double expression():
+//{
+//    double expr;
+//}
+//{
+//    expr=bin_op_expr() {return expr;}
+//    | expr=primary_expr() {return expr;}
+//}
+//
+//double bin_op_expr():
+//{
+//    double left;
+//    double right;
+//}
+//{
+//    left=expression()
+//    (<ADD> right=expression(){left+=right;}
+//    | <SUBTRACT> right=expression(){left-=right;}
+//    | <MULTIPLY> right=expression(){left*=right;}
+//    | <DIVIDE> right=expression() {left/=right;}
+//    | <POWER> right=expression() {left=Math.pow(left,right);}
+//    )*{return left;}
+//}
+//
+//double primary_expr():
+//{
+//    double expr;
+//}
+//{
+//    expr=parseBase() {return expr;}
+//    | expr=paren_expr() {return expr;}
+//    | expr=special_expr() {return expr;}
+//}
+//
+//double paren_expr():
+//{
+//    double expr;
+//}
+//{
+//    <LPAREN> expr=expression() <RPAREN> {return expr;}
+//}
+
+//double special_expr():
+//{
+//    double expr;
+//}
+//{
+//    <SIN><LPAREN> expr=calc() <RPAREN> {return Math.sin(expr);}
+//    | <COS><LPAREN> expr=calc() <RPAREN> {return Math.cos(expr);}
+//}
+
+double calc() throws NumberFormatException:
+{
+    double left;
+    double right;
+}
+{
+    left=multOrDiv()
+    (<ADD> right=multOrDiv(){left+=right;}
+    | <SUBTRACT> right=multOrDiv(){left-=right;}
+    )*{return left;}
+}
+
+double multOrDiv()throws NumberFormatException:
+{
+    double left;
+    double right;
+}
+{
+    left=parseBase()
+    (<MULTIPLY> right=parseBase(){left*=right;}
+    | <DIVIDE> right=parseBase(){left/=right;}
+    )*{return left;}
+}
+
+double parseBase()throws NumberFormatException:
+{
+    Token t=null;
+    double num;
+}
+{
+    t=<NUMBER> {return Double.parseDouble(t.image);}
+    | <LPAREN> num=calc() <RPAREN> {return num;}
+    | <SUBTRACT> t=<NUMBER> {return 0-Double.parseDouble(t.image);}
+//    | t=<NUMBER> <FACTORIAL> {return Calculator.factorial(t.image);}
+    |<SIN><LPAREN> num=calc() <RPAREN> {return Math.sin(num);}
+        | <COS><LPAREN> num=calc() <RPAREN> {return Math.cos(num);}
+}
+
+
+
+
+
+
+

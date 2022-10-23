@@ -121,7 +121,7 @@
             android:layout_columnWeight="1"
             android:textSize="25dp"
             style="?android:attr/borderlessButtonStyle"
-            android:text="X"
+            android:text="*"
             android:gravity="center"
             android:textColor="@color/black"/>
         <Button

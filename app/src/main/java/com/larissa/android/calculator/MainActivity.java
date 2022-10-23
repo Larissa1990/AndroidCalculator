@@ -2,23 +2,29 @@ package com.larissa.android.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.larissa.android.calculator.databinding.ActivityMainBinding;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String KEY_SCREEN="screen";
     private ActivityMainBinding mActivityMainBinding;
     private String screenText="";
+    private int screenOrientation;
+    private CalculatorParser calculator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivityMainBinding=ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mActivityMainBinding.getRoot());
+        screenOrientation=getResources().getConfiguration().orientation;
+        if(screenOrientation== Configuration.ORIENTATION_LANDSCAPE){
+            mActivityMainBinding.btnSin.setOnClickListener(this);
+        }
 
         mActivityMainBinding.btnAdd.setOnClickListener(this);
         mActivityMainBinding.btnBack.setOnClickListener(this);
@@ -64,9 +70,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else if(id==R.id.btn_back){
                 screenText=screenText.substring(0,screenText.length()-1);
             }
+            else if(id==R.id.btn_sin){
+                screenText+="sin(";
+            }
             else if(id==R.id.btn_equal){
-                String answer=Calculator.calculate(screenText);
-                screenText=answer;
+//                String answer=Calculator.calculate(screenText);
+//                screenText=answer;
+                try{
+                    calculator=new CalculatorParser(screenText);
+                    double ans=calculator.calc();
+                    screenText=String.valueOf(ans);
+                }catch (Exception ex){
+                    screenText=ex.toString();
+                }
             }
             else{
                 screenText+=((Button) view).getText().toString();

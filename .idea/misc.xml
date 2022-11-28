@@ -7,7 +7,14 @@
         <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/drawable/ic_clear_foreground.xml" value="0.2735" />
         <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/drawable/ic_launcher_background.xml" value="0.283" />
         <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/layout-land/activity_main.xml" value="0.25" />
+        <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/layout-land/fragment_calculate.xml" value="0.5522522522522523" />
+        <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/layout/activity_history.xml" value="0.36041666666666666" />
         <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/layout/fragment_calculate.xml" value="0.3182291666666667" />
+        <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/layout/fragment_history.xml" value="0.3182291666666667" />
+        <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/layout/fragment_single_history.xml" value="0.239453125" />
+        <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/layout/history_item.xml" value="0.2611111111111111" />
+        <entry key="..\:/AndroidProjects/Calculator/app/src/main/res/menu/activity_main.xml" value="0.3453125" />
       </map>
     </option>
   </component>

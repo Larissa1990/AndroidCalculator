@@ -27,27 +27,29 @@ public interface CalculatorParserConstants {
   /** RegularExpression Id. */
   int RPAREN = 9;
   /** RegularExpression Id. */
-  int NUMBER = 10;
+  int PI = 10;
   /** RegularExpression Id. */
-  int DIGITS = 11;
+  int E = 11;
   /** RegularExpression Id. */
-  int SIN = 12;
+  int NUMBER = 12;
   /** RegularExpression Id. */
-  int COS = 13;
+  int DIGITS = 13;
   /** RegularExpression Id. */
-  int TAN = 14;
+  int NUM = 14;
   /** RegularExpression Id. */
-  int SQRT = 15;
+  int SIN = 15;
   /** RegularExpression Id. */
-  int FACTORIAL = 16;
+  int COS = 16;
   /** RegularExpression Id. */
-  int LOG = 17;
+  int TAN = 17;
   /** RegularExpression Id. */
-  int LN = 18;
+  int SQRT = 18;
   /** RegularExpression Id. */
-  int PI = 19;
+  int FACTORIAL = 19;
   /** RegularExpression Id. */
-  int E = 20;
+  int LOG = 20;
+  /** RegularExpression Id. */
+  int LN = 21;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -64,8 +66,11 @@ public interface CalculatorParserConstants {
     "\"^\"",
     "\"(\"",
     "\")\"",
+    "\"pi\"",
+    "\"e\"",
     "<NUMBER>",
     "<DIGITS>",
+    "<NUM>",
     "\"sin\"",
     "\"cos\"",
     "\"tan\"",
@@ -73,8 +78,6 @@ public interface CalculatorParserConstants {
     "\"!\"",
     "\"log\"",
     "\"ln\"",
-    "\"pi\"",
-    "\"e\"",
   };
 
 }

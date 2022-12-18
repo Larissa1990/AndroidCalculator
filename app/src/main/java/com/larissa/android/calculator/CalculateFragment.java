@@ -21,6 +21,9 @@ import androidx.navigation.Navigation;
 
 import com.larissa.android.calculator.databinding.FragmentCalculateBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CalculateFragment extends Fragment implements View.OnClickListener, MenuProvider {
     private FragmentCalculateBinding binding;
     private int screenOrientation;
@@ -47,6 +50,15 @@ public class CalculateFragment extends Fragment implements View.OnClickListener,
         screenOrientation=getActivity().getResources().getConfiguration().orientation;
         if(screenOrientation== Configuration.ORIENTATION_LANDSCAPE){
             binding.btnSin.setOnClickListener(this);
+            binding.btnCos.setOnClickListener(this);
+            binding.btnTan.setOnClickListener(this);
+            binding.btnLog.setOnClickListener(this);
+            binding.btnLn.setOnClickListener(this);
+            binding.btnPi.setOnClickListener(this);
+            binding.btnE.setOnClickListener(this);
+            binding.btnFactorial.setOnClickListener(this);
+            binding.btnSqrt.setOnClickListener(this);
+            binding.btnPower.setOnClickListener(this);
         }
         binding.btnAdd.setOnClickListener(this);
         binding.btnBack.setOnClickListener(this);
@@ -74,9 +86,11 @@ public class CalculateFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onClick(View view) {
         int id=view.getId();
+
         if(id==R.id.btn_divide){
             binding.btnZero.setEnabled(false);
-            viewmodel.screenText+="/";}
+            viewmodel.screenText+="/";
+        }
         else{
             if(!binding.btnZero.isEnabled()) {
                 binding.btnZero.setEnabled(true);
@@ -91,8 +105,22 @@ public class CalculateFragment extends Fragment implements View.OnClickListener,
             else if(id==R.id.btn_sin){
                 viewmodel.screenText+="sin(";
             }
+            else if(id==R.id.btn_cos){
+                viewmodel.screenText+="cos(";
+            }
+            else if(id==R.id.btn_tan){
+                viewmodel.screenText+="tan(";
+            }
+            else if(id==R.id.btn_log){
+                viewmodel.screenText+="log(";
+            }
+            else if(id==R.id.btn_ln){
+                viewmodel.screenText+="ln(";
+            }
+            else if(id==R.id.btn_sqrt){
+                viewmodel.screenText+="sqrt(";
+            }
             else if(id==R.id.btn_equal){
-
                 try{
                     CalculatorParser calculator=new CalculatorParser(viewmodel.screenText);
                     double ans=calculator.calc();
@@ -104,7 +132,16 @@ public class CalculateFragment extends Fragment implements View.OnClickListener,
                 }
             }
             else{
-                viewmodel.screenText+=((Button) view).getText().toString();
+                if(id==R.id.btn_pi){
+                    char lastTerm=viewmodel.screenText.charAt(viewmodel.screenText.length()-1);
+                    if(Character.isDigit(lastTerm)){
+                        viewmodel.screenText+="*pi";
+                    }else{
+                        viewmodel.screenText+="pi";
+                    }
+                }else{
+                    viewmodel.screenText+=((Button) view).getText().toString();
+                }
             }
         }
 

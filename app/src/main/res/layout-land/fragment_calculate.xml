@@ -30,6 +30,7 @@
             android:textColor="@color/black"
             android:textAllCaps="false"/>
         <Button
+            android:id="@+id/btn_tan"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:text="tan"
@@ -74,6 +75,7 @@
             android:textSize="15dp"
             android:textColor="@color/black" />
         <Button
+            android:id="@+id/btn_cos"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:textSize="15dp"
@@ -83,6 +85,7 @@
             android:textColor="@color/black"
             android:textAllCaps="false"/>
         <Button
+            android:id="@+id/btn_ln"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:text="ln"
@@ -128,6 +131,7 @@
             android:gravity="center"
             android:textColor="@color/black" />
         <Button
+            android:id="@+id/btn_log"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:text="log"
@@ -137,6 +141,7 @@
             android:textSize="15dp"
             android:textAllCaps="false"/>
         <Button
+            android:id="@+id/btn_factorial"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:text="!"
@@ -182,6 +187,7 @@
             android:gravity="center"
             android:textColor="@color/black"/>
         <Button
+            android:id="@+id/btn_e"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:text="e"
@@ -191,6 +197,7 @@
             android:textSize="15dp"
             android:textAllCaps="false"/>
         <Button
+            android:id="@+id/btn_pi"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:text="π"
@@ -236,6 +243,7 @@
             android:gravity="center"
             android:textColor="@color/black"/>
         <Button
+            android:id="@+id/btn_power"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:text="^"
@@ -245,6 +253,7 @@
             android:textSize="15dp"
             android:textAllCaps="false"/>
         <Button
+            android:id="@+id/btn_sqrt"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:text="√￣"

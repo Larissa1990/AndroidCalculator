@@ -28,12 +28,23 @@ TOKEN:{
 }
 
 TOKEN : {
+    <PI: "pi">
+    | <E: "e">
+}
+
+TOKEN : {
     <NUMBER:<DIGITS>
     | <DIGITS>"."<DIGITS>
     | <DIGITS>"."
     | "."<DIGITS>>
     |
     <#DIGITS:(["0"-"9"])+>
+}
+
+TOKEN:{
+<NUM:<NUMBER>
+| <PI>
+| <E>>
 }
 
 TOKEN : {
@@ -46,61 +57,7 @@ TOKEN : {
     | <LN: "ln">
 }
 
-TOKEN : {
-    <PI: "pi">
-    | <E: "e">
-}
 
-//double expression():
-//{
-//    double expr;
-//}
-//{
-//    expr=bin_op_expr() {return expr;}
-//    | expr=primary_expr() {return expr;}
-//}
-//
-//double bin_op_expr():
-//{
-//    double left;
-//    double right;
-//}
-//{
-//    left=expression()
-//    (<ADD> right=expression(){left+=right;}
-//    | <SUBTRACT> right=expression(){left-=right;}
-//    | <MULTIPLY> right=expression(){left*=right;}
-//    | <DIVIDE> right=expression() {left/=right;}
-//    | <POWER> right=expression() {left=Math.pow(left,right);}
-//    )*{return left;}
-//}
-//
-//double primary_expr():
-//{
-//    double expr;
-//}
-//{
-//    expr=parseBase() {return expr;}
-//    | expr=paren_expr() {return expr;}
-//    | expr=special_expr() {return expr;}
-//}
-//
-//double paren_expr():
-//{
-//    double expr;
-//}
-//{
-//    <LPAREN> expr=expression() <RPAREN> {return expr;}
-//}
-
-//double special_expr():
-//{
-//    double expr;
-//}
-//{
-//    <SIN><LPAREN> expr=calc() <RPAREN> {return Math.sin(expr);}
-//    | <COS><LPAREN> expr=calc() <RPAREN> {return Math.cos(expr);}
-//}
 
 double calc() throws NumberFormatException:
 {
@@ -123,22 +80,37 @@ double multOrDiv()throws NumberFormatException:
     left=parseBase()
     (<MULTIPLY> right=parseBase(){left*=right;}
     | <DIVIDE> right=parseBase(){left/=right;}
+    | <POWER> right=parseBase() {left=Math.pow(left,right);}
     )*{return left;}
 }
 
+
 double parseBase()throws NumberFormatException:
 {
-    Token t=null;
+    //Token t=null;
     double num;
 }
 {
-    t=<NUMBER> {return Double.parseDouble(t.image);}
-    | <LPAREN> num=calc() <RPAREN> {return num;}
-    | <SUBTRACT> t=<NUMBER> {return 0-Double.parseDouble(t.image);}
-//    | t=<NUMBER> <FACTORIAL> {return Calculator.factorial(t.image);}
-    |<SIN><LPAREN> num=calc() <RPAREN> {return Math.sin(num);}
-        | <COS><LPAREN> num=calc() <RPAREN> {return Math.cos(num);}
+    num=getNum(){return num;}|
+    <LPAREN> num=calc() <RPAREN> {return num;}
+    | <SUBTRACT> num=getNum() {return 0-num;}
+    | <SIN><LPAREN> num=calc() <RPAREN> {return Math.sin(num);}
+    | <COS><LPAREN> num=calc() <RPAREN> {return Math.cos(num);}
+    | <TAN><LPAREN>num=calc()<RPAREN> {return Math.tan(num);}
+    | <LOG><LPAREN>num=calc()<RPAREN> {return Math.log10(num);}
+    | <LN><LPAREN> num=calc() <RPAREN> {return Math.log(num);}
+    | <SQRT> <LPAREN> num=calc() <RPAREN> {return Math.sqrt(num);}
+
 }
+
+double getNum() throws NumberFormatException:{
+    Token t=null;
+}{
+    t=<NUMBER> {return Double.parseDouble(t.image);}
+    | t=<PI>{return Math.PI;}
+    | t=<E>{return Math.E;}
+}
+
 
 
 

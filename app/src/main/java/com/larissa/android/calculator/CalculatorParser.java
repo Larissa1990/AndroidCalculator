@@ -9,74 +9,6 @@ public class CalculatorParser implements CalculatorParserConstants {
         this(new StringReader(expr));
         }
 
-//double expression():
-//{
-//    double expr;
-//}
-//{
-//    expr=bin_op_expr() {return expr;}
-//    | expr=primary_expr() {return expr;}
-//}
-//
-//double bin_op_expr():
-//{
-//    double left;
-//    double right;
-//}
-//{
-//    left=expression()
-//    (<ADD> right=expression(){left+=right;}
-//    | <SUBTRACT> right=expression(){left-=right;}
-//    | <MULTIPLY> right=expression(){left*=right;}
-//    | <DIVIDE> right=expression() {left/=right;}
-//    | <POWER> right=expression() {left=Math.pow(left,right);}
-//    )*{return left;}
-//}
-//
-//double primary_expr():
-//{
-//    double expr;
-//}
-//{
-//    expr=parseBase() {return expr;}
-//    | expr=paren_expr() {return expr;}
-//    | expr=special_expr() {return expr;}
-//}
-//
-//double paren_expr():
-//{
-//    double expr;
-//}
-//{
-//    <LPAREN> expr=expression() <RPAREN> {return expr;}
-//}
-  final public 
-double special_expr() throws ParseException {double expr;
-    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case SIN:{
-      jj_consume_token(SIN);
-      jj_consume_token(LPAREN);
-      expr = calc();
-      jj_consume_token(RPAREN);
-{if ("" != null) return Math.sin(expr);}
-      break;
-      }
-    case COS:{
-      jj_consume_token(COS);
-      jj_consume_token(LPAREN);
-      expr = calc();
-      jj_consume_token(RPAREN);
-{if ("" != null) return Math.cos(expr);}
-      break;
-      }
-    default:
-      jj_la1[0] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-}
-
   final public double calc() throws ParseException, NumberFormatException {double left;
     double right;
     left = multOrDiv();
@@ -89,7 +21,7 @@ double special_expr() throws ParseException {double expr;
         break;
         }
       default:
-        jj_la1[1] = jj_gen;
+        jj_la1[0] = jj_gen;
         break label_1;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -106,7 +38,7 @@ left-=right;
         break;
         }
       default:
-        jj_la1[2] = jj_gen;
+        jj_la1[1] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -122,12 +54,13 @@ left-=right;
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case MULTIPLY:
-      case DIVIDE:{
+      case DIVIDE:
+      case POWER:{
         ;
         break;
         }
       default:
-        jj_la1[3] = jj_gen;
+        jj_la1[2] = jj_gen;
         break label_2;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -143,8 +76,14 @@ left*=right;
 left/=right;
         break;
         }
+      case POWER:{
+        jj_consume_token(POWER);
+        right = parseBase();
+left=Math.pow(left,right);
+        break;
+        }
       default:
-        jj_la1[4] = jj_gen;
+        jj_la1[3] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -153,12 +92,14 @@ left/=right;
     throw new Error("Missing return statement in function");
 }
 
-  final public double parseBase() throws ParseException, NumberFormatException {Token t=null;
+  final public double parseBase() throws ParseException, NumberFormatException {//Token t=null;
     double num;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case PI:
+    case E:
     case NUMBER:{
-      t = jj_consume_token(NUMBER);
-{if ("" != null) return Double.parseDouble(t.image);}
+      num = getNum();
+{if ("" != null) return num;}
       break;
       }
     case LPAREN:{
@@ -170,8 +111,8 @@ left/=right;
       }
     case SUBTRACT:{
       jj_consume_token(SUBTRACT);
-      t = jj_consume_token(NUMBER);
-{if ("" != null) return 0-Double.parseDouble(t.image);}
+      num = getNum();
+{if ("" != null) return 0-num;}
       break;
       }
     case SIN:{
@@ -188,6 +129,63 @@ left/=right;
       num = calc();
       jj_consume_token(RPAREN);
 {if ("" != null) return Math.cos(num);}
+      break;
+      }
+    case TAN:{
+      jj_consume_token(TAN);
+      jj_consume_token(LPAREN);
+      num = calc();
+      jj_consume_token(RPAREN);
+{if ("" != null) return Math.tan(num);}
+      break;
+      }
+    case LOG:{
+      jj_consume_token(LOG);
+      jj_consume_token(LPAREN);
+      num = calc();
+      jj_consume_token(RPAREN);
+{if ("" != null) return Math.log10(num);}
+      break;
+      }
+    case LN:{
+      jj_consume_token(LN);
+      jj_consume_token(LPAREN);
+      num = calc();
+      jj_consume_token(RPAREN);
+{if ("" != null) return Math.log(num);}
+      break;
+      }
+    case SQRT:{
+      jj_consume_token(SQRT);
+      jj_consume_token(LPAREN);
+      num = calc();
+      jj_consume_token(RPAREN);
+{if ("" != null) return Math.sqrt(num);}
+      break;
+      }
+    default:
+      jj_la1[4] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    throw new Error("Missing return statement in function");
+}
+
+  final public double getNum() throws ParseException, NumberFormatException {Token t=null;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case NUMBER:{
+      t = jj_consume_token(NUMBER);
+{if ("" != null) return Double.parseDouble(t.image);}
+      break;
+      }
+    case PI:{
+      t = jj_consume_token(PI);
+{if ("" != null) return Math.PI;}
+      break;
+      }
+    case E:{
+      t = jj_consume_token(E);
+{if ("" != null) return Math.E;}
       break;
       }
     default:
@@ -213,7 +211,7 @@ left/=right;
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x3000,0x60,0x60,0x18,0x18,0x3540,};
+	   jj_la1_0 = new int[] {0x60,0x60,0x98,0x98,0x379d40,0x1c00,};
 	}
 
   /** Constructor with InputStream. */
@@ -338,7 +336,7 @@ left/=right;
   /** Generate ParseException. */
   public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[21];
+	 boolean[] la1tokens = new boolean[22];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -352,7 +350,7 @@ left/=right;
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 21; i++) {
+	 for (int i = 0; i < 22; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;

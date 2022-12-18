@@ -28,7 +28,6 @@ public class CalculateFragment extends Fragment implements View.OnClickListener,
     private FragmentCalculateBinding binding;
     private int screenOrientation;
     private CalculatorViewModel viewmodel;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +118,38 @@ public class CalculateFragment extends Fragment implements View.OnClickListener,
             }
             else if(id==R.id.btn_sqrt){
                 viewmodel.screenText+="sqrt(";
+            }
+            else if(id==R.id.btn_factorial){
+                String para="";
+                char c=viewmodel.screenText.charAt(viewmodel.screenText.length()-1);
+                if(c==')'){
+                    for(int i=viewmodel.screenText.length()-1;i>=0;i--){
+                        c= viewmodel.screenText.charAt(i);
+                        if(c=='('){
+                            para=viewmodel.screenText.substring(i+1,viewmodel.screenText.length()-1);
+                            viewmodel.screenText=viewmodel.screenText.substring(0,i)+"!("+para+")";
+                            break;
+                        }
+                    }
+                }
+                else{
+                    for(int i=viewmodel.screenText.length()-1;i>=0;i--){
+                        c=viewmodel.screenText.charAt(i);
+                        if(!Character.isDigit(c)){
+                            para=viewmodel.screenText.substring(i+1);
+                            viewmodel.screenText=viewmodel.screenText.substring(0,i+1)+"!("+para+")";
+                            break;
+                        }
+                        else{
+                            if(i==0){
+                                viewmodel.screenText="!("+viewmodel.screenText+")";
+                                break;
+                            }
+                        }
+
+                    }
+                }
+
             }
             else if(id==R.id.btn_equal){
                 try{

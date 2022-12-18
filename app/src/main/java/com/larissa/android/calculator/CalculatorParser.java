@@ -163,6 +163,14 @@ left=Math.pow(left,right);
 {if ("" != null) return Math.sqrt(num);}
       break;
       }
+    case FACTORIAL:{
+      jj_consume_token(FACTORIAL);
+      jj_consume_token(LPAREN);
+      num = calc();
+      jj_consume_token(RPAREN);
+{if ("" != null) return Calculator.factorial(num);}
+      break;
+      }
     default:
       jj_la1[4] = jj_gen;
       jj_consume_token(-1);
@@ -211,7 +219,7 @@ left=Math.pow(left,right);
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x60,0x60,0x98,0x98,0x379d40,0x1c00,};
+	   jj_la1_0 = new int[] {0x60,0x60,0x98,0x98,0x3f9d40,0x1c00,};
 	}
 
   /** Constructor with InputStream. */

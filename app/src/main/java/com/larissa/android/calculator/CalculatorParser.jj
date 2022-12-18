@@ -1,6 +1,7 @@
 options{
     STATIC=false;   // 关闭生成静态java方法，默认是true
 }
+// 修改CalculatorParser.jj后，在cmd中运行javacc CalculatorParser.jj文件更新下生成的compiler
 PARSER_BEGIN(CalculatorParser)
 package com.larissa.android.calculator;
 
@@ -100,6 +101,7 @@ double parseBase()throws NumberFormatException:
     | <LOG><LPAREN>num=calc()<RPAREN> {return Math.log10(num);}
     | <LN><LPAREN> num=calc() <RPAREN> {return Math.log(num);}
     | <SQRT> <LPAREN> num=calc() <RPAREN> {return Math.sqrt(num);}
+    | <FACTORIAL> <LPAREN> num=calc() <RPAREN> {return Calculator.factorial(num);}
 
 }
 
